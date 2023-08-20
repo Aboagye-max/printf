@@ -1,49 +1,26 @@
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include "main.h"
 
-int _printf(const char *format, ...) {
+int _printf(const char *format, ...)
+{
     va_list args;
     va_start(args, format);
-
-    int count = 0;
-    char c;
-    while ((c = *format++) != '\0') {
-        if (c == '%') {
-            c = *format++;
-            if (c == '\0') {
-                // Incomplete format specifier
-                break;
-            }
-            switch (c) {
-                case 'c':
-                    putchar(va_arg(args, int));
-                    count++;
-                    break;
-                case 's': {
-                    const char *str = va_arg(args, const char *);
-                    while (*str != '\0') {
-                        putchar(*str);
-                        str++;
-                        count++;
-                    }
-                    break;
-                }
-                case '%':
-                    putchar('%');
-                    count++;
-                    break;
-                default:
-                    putchar('%');
-                    putchar(c);
-                    count += 2;
-                    break;
-            }
-        } else {
-            putchar(c);
-            count++;
+ 
+    while (*format != '\0') {
+        if (*format == 's') {
+            char *str = va_arg(args, char*);
+            printf("%s\n", str);
+        } else if (*format == 'c') {
+            int c = va_arg(args, int);
+            printf("%c\n", c);
+        } else if (*format == 'd' || *format == 'i') {
+            int num = va_arg(args, int);
+            printf("%d\n", num);
         }
+        ++format;
     }
-
+ 
     va_end(args);
-    return count;
+    return 0;
 }
