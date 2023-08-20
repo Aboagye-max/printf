@@ -1,3 +1,5 @@
+#include <stdarg.h>
+#include <stdio.h>
 #include "main.h"
 
 int _printf(const char *format, ...)
@@ -7,21 +9,18 @@ int _printf(const char *format, ...)
  
     while (*format != '\0') {
         if (*format == 's') {
-            int i = va_arg(args, int);
-            printf("%s\n", i);
+            char *str = va_arg(args, char*);
+            printf("%s\n", str);
         } else if (*format == 'c') {
-            int c = va_arg(args, char);
+            int c = va_arg(args, int);
             printf("%c\n", c);
-        } else if (*format == 'd') {
-            int d = va_arg(args, int);
-            printf("%d\n", d);
-        } else if (*format == 'i'){
-            int i = va_arg(args, int);
-            printf("%i\n", d);
+        } else if (*format == 'd' || *format == 'i') {
+            int num = va_arg(args, int);
+            printf("%d\n", num);
         }
         ++format;
     }
  
     va_end(args);
-    return (0);
+    return 0;
 }
