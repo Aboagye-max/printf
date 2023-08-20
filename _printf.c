@@ -56,14 +56,13 @@ int _printf(const char *format, ...)
 	
 		numlength = digit_count(pos_n);
 	
-	/* calculate multiplier for largest place*/
 		i = numlength;
 		while (i != 1)
 		{
 			mul = mul * 10;
 			i--;
 		}
-	/* print digit values as characters */
+	
 		_putchar((pos_n / mul) + '0');
 		while (mul != 1)
 		{
