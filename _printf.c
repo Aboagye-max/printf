@@ -6,16 +6,16 @@ int _printf(const char *format, ...)
     va_start(args, format);
  
     while (*format != '\0') {
-        if (*format == 's') {
+        if (*format == '%s') {
             int i = va_arg(args, int);
             printf("%s\n", i);
-        } else if (*format == 'c') {
+        } else if (*format == '%c') {
             int c = va_arg(args, char);
             printf("%c\n", c);
-        } else if (*format == 'd') {
+        } else if (*format == '%d') {
             int d = va_arg(args, int);
             printf("%d\n", d);
-        } else if (*format == 'i'){
+        } else if (*format == '%i'){
             int i = va_arg(args, int);
             printf("%i\n", d);
         }
