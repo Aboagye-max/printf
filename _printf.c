@@ -1,48 +1,49 @@
-#include 'main.h'
+#include <stdio.h>
+#include <stdarg.h>
 
 int _printf(const char *format, ...) {
     va_list args;
     va_start(args, format);
 
     int count = 0;
-    while (*format != '\0') {
-        if (*format == '%') {
-            format++; // Move past the '%'
-
-            // Handle conversion specifiers
-            switch (*format) {
+    char c;
+    while ((c = *format++) != '\0') {
+        if (c == '%') {
+            c = *format++;
+            if (c == '\0') {
+                // Incomplete format specifier
+                break;
+            }
+            switch (c) {
                 case 'c':
-                    putchar(va_arg(args, int)); // Print a character
+                    putchar(va_arg(args, int));
                     count++;
                     break;
                 case 's': {
-                    const char *str = va_arg(args, const char *); // Get the string pointer
+                    const char *str = va_arg(args, const char *);
                     while (*str != '\0') {
-                        putchar(*str); // Print each character of the string
+                        putchar(*str);
                         str++;
                         count++;
                     }
                     break;
                 }
                 case '%':
-                    putchar('%'); // Print a literal '%'
+                    putchar('%');
                     count++;
                     break;
                 default:
-                    // If an unsupported specifier is encountered, simply print the character
-                    putchar(*format);
-                    count++;
+                    putchar('%');
+                    putchar(c);
+                    count += 2;
                     break;
             }
         } else {
-            putchar(*format); // Print non-% characters as they are
+            putchar(c);
             count++;
         }
-
-        format++; // Move to the next character in the format string
     }
 
     va_end(args);
-
     return count;
 }
