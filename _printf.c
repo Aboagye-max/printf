@@ -24,5 +24,5 @@ int _printf(const char *format, ...)
     }
  
     va_end(args);
-    return 0; // Return a value other than 0 to indicate an error
+    return (0); // Return a value other than 0 to indicate an error
 }
