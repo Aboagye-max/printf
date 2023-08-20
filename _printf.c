@@ -10,7 +10,7 @@ int _printf(const char *format, ...)
             int i = va_arg(args, int);
             printf("%s\n", i);
         } else if (*format == '%c') {
-            int c = va_arg(args, char);
+            char c = va_arg(args, char);
             printf("%c\n", c);
         } else if (*format == '%d') {
             int d = va_arg(args, int);
