@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
 
 /**
  * hexadecimal - a fuction that changes an integer to a
@@ -32,12 +33,12 @@ void hexadecimal(int num)
 }
 
 /**
- * _printf - a function that prints a hexadecimal
+ * hex_print - a function that prints a hexadecimal
  * @format: the format to be oprinted
  * Return: the number of character printed
  */
 
-int _printf(const char *format, ...)
+int hex_printf(const char *format, ...)
 {
 	va_list ptr;
 	int int_hexa = 0, count = 0;
@@ -74,11 +75,4 @@ int _printf(const char *format, ...)
 	va_end(ptr);
 
 	return (count);
-}
-
-int main() {
-	    int num = 42;
-	        int printed = _printf("Hexadecimal value: %x\n", num);
-		    printf("Total characters printed: %d\n", printed);
-		        return 0;
 }

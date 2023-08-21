@@ -3,17 +3,17 @@
 
 
 /**
- * my_printf_integer - a function that prints and integer
+ * int_printf - a function that prints and integer
  * handling the conversion 'i' and 'd'
  * @format: the format to be printed
  * Return: the number of characters printed
  */
 
 
-int _printf(const char *format, ...)
+int my_printf_int(const char *format, int_d, int_i)
 {
 	va_list ptr;
-	int int_d, int_i, count = 0;
+	int count = 0;
 
 	va_start(ptr, format);
 
@@ -32,7 +32,7 @@ int _printf(const char *format, ...)
 			else if (*format == 'i')
 			{
 				int_i = va_arg(ptr, int);
-				printf("%d", int_i);
+				printf("%i", int_i);
 				count++;
 			}
 		}
@@ -45,11 +45,4 @@ int _printf(const char *format, ...)
 	}
 	va_end(ptr);
 	return (count);
-}
-int main()
-{
-	    int num = 42;
-	        int printed = _printf("Integer: %d, Another Integer: %i\n", num, 100);
-		    printf("Total characters printed: %d\n", printed);
-		        return 0;
-}
+}}

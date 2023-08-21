@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
 
 /**
- * _printf - a fnction that prints an unsigned integer
+ * u_printf - a fnction that prints an unsigned integer
  * @format: the format to be printed
  * Return: the number of chracters printed
  */
 
-int _printf(const char *format, ...)
+int u_printf(const char *format, ...)
 {
 	unsigned int u_int;
 	int count = 0;
@@ -44,11 +45,4 @@ int _printf(const char *format, ...)
 	va_end(ptr);
 
 	return (count);
-}
-
-int main() {
-	    unsigned int num = 42;
-	        int printed = _printf("Unsigned integer: %u\n", num);
-		    printf("Total characters printed: %d\n", printed);
-		        return 0;
 }

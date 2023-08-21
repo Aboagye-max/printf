@@ -17,5 +17,3 @@ void flush_buffer(char *buffer, int *buffer_index)
 
 	*buffer_index = 0;
 }
-
-`

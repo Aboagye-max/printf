@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
 
 /**
  * _binary - a function that prints a binary
@@ -31,13 +32,13 @@ void _binary(int b)
 
 
 /**
- * _printf - a function that prints the binary of a number using
+ * bin_printf - a function that prints the binary of a number using
  * a costom conversion 'b' and the specifier '%'
  * @format: the format to be printed
  * Return: the number of characters printed
  */
 
-int _printf(const char *format, ...)
+int bin_printf(const char *format, ...)
 {
 	int int_b, count = 0;
 	va_list ptr;
@@ -72,10 +73,4 @@ int _printf(const char *format, ...)
 	}
 	va_end(ptr);
 	return (count);
-}
-
-int main() {
-	    int num = 42;
-	        _printf("Binary: %b\n", num);
-		    return 0;
 }

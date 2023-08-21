@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
 
 /**
  * octal - a function that converts an in to an octal
@@ -19,7 +20,7 @@ void octal(int oct)
 	while (oct > 0)
 	{
 		Octal[index++] = oct % 8;
-		oct / 8;
+		oct = oct / 8;
 	}
 
 	for (i = index - 1; i >= 0; i--)
@@ -30,12 +31,12 @@ void octal(int oct)
 
 
 /**
- * _printf - a function that prints an octect
+ * oct_printf - a function that prints an octect
  * @format: the format to be printed
  * Return: the number of characters to be printed
  */
 
-int _printf(const char *format, ...)
+int oct_printf(const char *format, ...)
 {
 	int int_oct, count = 0;
 
@@ -72,11 +73,4 @@ int _printf(const char *format, ...)
 	va_end(ptr);
 
 	return(count);
-}
-
-int main() {
-	    unsigned int num = 42;
-	        int printed = _printf("Octal value: %o\n", num);
-		    printf("Total characters printed: %d\n", printed);
-		        return 0;
 }
