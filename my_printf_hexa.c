@@ -1,78 +1,36 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
 
 /**
- * hexadecimal - a fuction that changes an integer to a
- * hexadecimal
- * @nun: the number to be converted
+ * printf_HEX_aux - prints an hexgecimal number.
+ * @num: number to print.
+ * Return: counter.
  */
-
-void hexadecimal(int num)
+int printf_HEX_aux(unsigned int num)
 {
-	char digit[] = "123456789abcdef";
-	char hexa[64];
-	int index = 0, i;
+	int i;
+	int *array;
+	int counter = 0;
+	unsigned int temp = num;
 
-	if (num == 0)
+	while (num / 16 != 0)
 	{
-		putchar('0');
-		return;
-	}
-
-	while (num > 0)
-	{
-		hexa[index++] = digit[num % 16];
 		num /= 16;
+		counter++;
 	}
+	counter++;
+	array = malloc(counter * sizeof(int));
 
-	for (i = index - 1; i >= 0; i--)
+	for (i = 0; i < counter; i++)
 	{
-		putchar(hexa[i]);
+		array[i] = temp % 16;
+		temp /= 16;
 	}
-}
-
-/**
- * hex_print - a function that prints a hexadecimal
- * @format: the format to be oprinted
- * Return: the number of character printed
- */
-
-int hex_printf(const char *format, ...)
-{
-	va_list ptr;
-	int int_hexa = 0, count = 0;
-
-
-	va_start(ptr, format);
-
-	while (*format)
+	for (i = counter - 1; i >= 0; i--)
 	{
-		if ( *format == '%')
-		{
-			format++;
-
-			if (*format == 'x')
-			{
-				int_hexa = va_arg(ptr, int);
-				hexadecimal(int_hexa);
-				count += 2;
-			}
-			else
-			{
-				putchar('%');
-				putchar(*format);
-				count += 2;
-			}
-		}
-		else
-		{
-			putchar(*format);
-			count++;
-		}
-		format++;
+		if (array[i] > 9)
+			array[i] = array[i] + 7;
+		_putchar(array[i] + '0');
 	}
-	va_end(ptr);
-
-	return (count);
+	free(array);
+	return (counter);
 }
