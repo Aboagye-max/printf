@@ -1,90 +1,45 @@
 #include "main.h"
-
-int write_print(mk_buffer container, va_list args);
-
 /**
- * _printf - Creates a buffer and writes that buffer to standard output
- * @format: the string to be printed, may contain conversion specifiers
- * which placehold for other data types to be printed
- *
- * Return: The number of characters printed.
+ * _printf - is a function that selects the correct function to print.
+ * @format: identifier to look for.
+ * Return: the length of the string.
  */
-int _printf(const char *format, ...)
+int _printf(const char * const format, ...)
 {
+	convert_match m[] = {
+		{"%s", printf_string}, {"%c", printf_char},
+		{"%%", printf_37},
+		{"%i", printf_int}, {"%d", printf_dec}, {"%r", printf_srev},
+		{"%R", printf_rot13}, {"%b", printf_bin}, {"%u", printf_unsigned},
+		{"%o", printf_oct}, {"%x", printf_hex}, {"%X", printf_HEX},
+		{"%S", printf_exclusive_string}, {"%p", printf_pointer}
+	};
+
 	va_list args;
-	mk_buffer container;
+	int i = 0, j, len = 0;
 
-	check_null(format);
-	container = create_buffer(container);
 	va_start(args, format);
-	while (*format)
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
+
+Here:
+	while (format[i] != '\0')
 	{
-		if (*format == '%' && get_format(format + 1))
+		j = 13;
+		while (j >= 0)
 		{
-			if (!(get_format(format + 1)))
+			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
 			{
-				container = add_buff(container, args, format, 0);
-					format++;
-				continue;
+				len += m[j].f(args);
+				i = i + 2;
+				goto Here;
 			}
-			while (*(format + 1) == ' ')
-				format++;
-			if (*(format + 1) == '\0')
-			{
-				format++;
-				continue;
-			}
-			else if (*(format + 1) == '\n' && *format == '%')
-			{
-				container = add_buff(container, args, 0, '%');
-				format++;
-				continue;
-			}
-			if (*(format + 1) && !(get_format(format + 1)))
-			{
-				container = add_buff(container, args, 0, '%');
-				container = add_buff(container, args, format, 0);
-				format++;
-				continue;
-			}
-			else if (*format == ' ')
-				container = add_buff(container, args, format, 0);
-			format++;
-			container = get_format(format)(container, args);
+			j--;
 		}
-		else if (*format == '%' && *(format + 1) == '\0')
-		{
-			write(1, container.start, container.size);
-			free(container.start);
-			va_end(args);
-
-			return (-1);
-		}
-		else
-		{
-			if (*(format + 1) == '%' && *format == '%')
-				format++;
-			*container.box = *format;
-			container.size += 1;
-		}
-		container.box++;
-		format++;
+		_putchar(format[i]);
+		len++;
+		i++;
 	}
-	return (write_print(container, args));
-}
-
-/**
- * write_print - Writes and frees the buffer to standard output
- * @container: the string to be printed, may contain conversion specifiers
- * which placehold for other data types to be printed
- * @args: the args
- * Return: The number of characters printed.
- */
-int write_print(mk_buffer container, va_list args)
-{
-	write(1, container.start, container.size);
-	free(container.start);
 	va_end(args);
-
-	return (container.size);
+	return (len);
 }
