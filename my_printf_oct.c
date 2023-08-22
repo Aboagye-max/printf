@@ -1,76 +1,35 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
 
 /**
- * octal - a function that converts an in to an octal
- * oct: the number to be changed
+ * printf_oct - prints an octal number.
+ * @val: arguments.
+ * Return: counter.
  */
-
-void octal(int oct)
+int printf_oct(va_list val)
 {
-	int Octal[64], index = 0, i;
+	int i;
+	int *array;
+	int counter = 0;
+	unsigned int num = va_arg(val, unsigned int);
+	unsigned int temp = num;
 
-	if (oct == 0)
+	while (num / 8 != 0)
 	{
-		putchar('0');
-		return;
+		num /= 8;
+		counter++;
 	}
+	counter++;
+	array = malloc(counter * sizeof(int));
 
-	while (oct > 0)
+	for (i = 0; i < counter; i++)
 	{
-		Octal[index++] = oct % 8;
-		oct = oct / 8;
+		array[i] = temp % 8;
+		temp /= 8;
 	}
-
-	for (i = index - 1; i >= 0; i--)
+	for (i = counter - 1; i >= 0; i--)
 	{
-		putchar(Octal[i] + '0');
+		_putchar(array[i] + '0');
 	}
-}
-
-
-/**
- * oct_printf - a function that prints an octect
- * @format: the format to be printed
- * Return: the number of characters to be printed
- */
-
-int oct_printf(const char *format, ...)
-{
-	int int_oct, count = 0;
-
-	va_list ptr;
-
-	va_start(ptr, format);
-
-	while(*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-
-			if (*format == 'o')
-			{
-				int_oct = va_arg(ptr, int);
-				printf("%o", int_oct);
-				count++;
-			}
-			else
-			{
-				putchar('%');
-				putchar(*format);
-				count += 2;
-			}
-		}
-		else
-		{
-			putchar(*format);
-			count++;
-		}
-		format++;
-	}
-	va_end(ptr);
-
-	return(count);
+	free(array);
+	return (counter);
 }
