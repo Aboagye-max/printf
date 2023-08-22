@@ -1,48 +1,90 @@
-#include <stdio.h>
-#include <stdarg.h>
+#include "main.h"
+/**
+ * printf_int - prints integer
+ * @args: argument to print
+ * Return: number of characters printed
+ */
+int printf_int(va_list args)
+{
+	int n = va_arg(args, int);
+	int num, last = n % 10, digit, exp = 1;
+	int  i = 1;
 
+	n = n / 10;
+	num = n;
+
+	if (last < 0)
+	{
+		_putchar('-');
+		num = -num;
+		n = -n;
+		last = -last;
+		i++;
+	}
+	if (num > 0)
+	{
+		while (num / 10 != 0)
+		{
+			exp = exp * 10;
+			num = num / 10;
+		}
+		num = n;
+		while (exp > 0)
+		{
+			digit = num / exp;
+			_putchar(digit + '0');
+			num = num - (digit * exp);
+			exp = exp / 10;
+			i++;
+		}
+	}
+	_putchar(last + '0');
+
+	return (i);
+}
 
 /**
- * int_printf - a function that prints and integer
- * handling the conversion 'i' and 'd'
- * @format: the format to be printed
- * Return: the number of characters printed
+ * printf_dec - prints decimal
+ * @args: argument to print
+ * Return: number of characters printed
  */
 
-
-int my_printf_int(const char *format, int_d, int_i)
+int printf_dec(va_list args)
 {
-	va_list ptr;
-	int count = 0;
+	int n = va_arg(args, int);
+	int num, last = n % 10, digit;
+	int  i = 1;
+	int exp = 1;
 
-	va_start(ptr, format);
+	n = n / 10;
+	num = n;
 
-	while (*format)
+	if (last < 0)
 	{
-		if (*format == '%')
-		{
-			format++;
-
-			if (*format == 'd')
-			{
-				int_d = va_arg(ptr, int);
-				printf("%d", int_d);
-				count++;
-			}
-			else if (*format == 'i')
-			{
-				int_i = va_arg(ptr, int);
-				printf("%i", int_i);
-				count++;
-			}
-		}
-		else
-		{
-			putchar(*format);
-			count++;
-		}
-		format++;
+		_putchar('-');
+		num = -num;
+		n = -n;
+		last = -last;
+		i++;
 	}
-	va_end(ptr);
-	return (count);
-}}
+	if (num > 0)
+	{
+		while (num / 10 != 0)
+		{
+			exp = exp * 10;
+			num = num / 10;
+		}
+		num = n;
+		while (exp > 0)
+		{
+			digit = num / exp;
+			_putchar(digit + '0');
+			num = num - (digit * exp);
+			exp = exp / 10;
+			i++;
+		}
+	}
+	_putchar(last + '0');
+
+	return (i);
+}
