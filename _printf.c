@@ -21,7 +21,6 @@ void cleanup(va_list args, buffer_t *output)
  * @format: Character string to print - may contain directives.
  * @output: A buffer_t struct containing a buffer.
  * @args: A va_list of arguments.
- *
  * Return: The number of characters stored to output.
  */
 int run_printf(const char *format, va_list args, buffer_t *output)
@@ -60,7 +59,6 @@ int run_printf(const char *format, va_list args, buffer_t *output)
 		ret += _memcpy(output, (format + i), 1);
 		i += (len != 0) ? 1 : 0;
 	}
-	cleanup(args, output);
 	return (ret);
 }
 
@@ -86,5 +84,7 @@ int _printf(const char *format, ...)
 
 	ret = run_printf(format, args, output);
 
+	va_end(args);
+	write(1, output->start, output->len);
 	return (ret);
 }
